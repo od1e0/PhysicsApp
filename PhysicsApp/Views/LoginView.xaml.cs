@@ -23,6 +23,7 @@ namespace PhysicsApp
         public LoginView()
         {
             InitializeComponent();
+
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -39,6 +40,19 @@ namespace PhysicsApp
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnLogin_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                btnLogin_Click(sender, e);
+            }
         }
     }
 }

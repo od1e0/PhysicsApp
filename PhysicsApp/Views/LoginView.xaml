@@ -220,10 +220,13 @@
                             BorderThickness="0"
                             Content="ВОЙТИ"
                             Foreground="White"
+                            KeyDown="btnLogin_KeyDown"
                             FontSize="12"
                             FontFamily="Montserrat"
-                            Cursor="Hand"                           
-                            Margin="0,30,0,0">
+                            Cursor="Hand"  
+                            IsDefault="True"
+                            Margin="0,30,0,0" Click="btnLogin_Click">
+                            
 
                         <Button.Style>
                             <Style TargetType="Button">
