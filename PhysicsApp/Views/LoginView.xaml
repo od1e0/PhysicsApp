@@ -1,9 +1,10 @@
-﻿<Window x:Class="PhysicsApp.MainWindow"
+﻿<Window x:Class="PhysicsApp.LoginView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhysicsApp"
+        xmlns:viewModel="clr-namespace:PhysicsApp.ViewModels" xmlns:customcontrols="clr-namespace:PhysicsApp.CustomControls"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="800"
         WindowStartupLocation="CenterScreen"
@@ -12,32 +13,52 @@
         ResizeMode="NoResize"
         AllowsTransparency="True"
         MouseDown="Window_MouseDown">
+
+    <Window.DataContext>
+        <viewModel:LoginViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
+
+    <Window.Visibility>
+        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
+    </Window.Visibility>
+
     <Border CornerRadius="12">
         <Border.Background>
-            <ImageBrush ImageSource="/Images/background.jpg"/>
+            <ImageBrush ImageSource="/Images/background.jpg"
+                        Stretch="Fill"/>
         </Border.Background>
-        <Border CornerRadius="10"
-                BorderThickness="1"
-                Opacity="0.9">
+
+        <Border CornerRadius="10"                    
+            BorderThickness="2"
+            Opacity="0.9">
+
             <Border.BorderBrush>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color ="#462AD8" Offset="0"/>
-                    <GradientStop Color ="#DA34AE" Offset="0.75"/>
-                    <GradientStop Color ="#8a16c1" Offset="1"/>
+                    <GradientStop Color="#462AD8" Offset="0"/>
+                    <GradientStop Color="#DA34AE" Offset="0.75"/>
+                    <GradientStop Color="#8A16C1" Offset="1"/>
                 </LinearGradientBrush>
             </Border.BorderBrush>
+
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                    <GradientStop Color ="#060531" Offset="0"/>
-                    <GradientStop Color ="#1b1448" Offset="0.75"/>
+                    <GradientStop Color="#060531" Offset="0"/>
+                    <GradientStop Color="#1B1448" Offset="1"/>
                 </LinearGradientBrush>
             </Border.Background>
+
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Grid>
+
+                <Grid Grid.Row="0">
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="25"/>
@@ -51,7 +72,7 @@
                                FontFamily="Montserrat"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Margin ="10,0,0,0"/>
+                               Margin="10,0,0,0"/>
 
                     <Button x:Name="btnMinimize"                           
                             BorderThickness="0"
@@ -62,6 +83,7 @@
                             Cursor="Hand"
                             Grid.Column="1"
                             Click="btnMinimize_Click">
+
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Background" Value="#28AEED"/>
@@ -72,6 +94,7 @@
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
+
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border Width="18" Height="18"
@@ -82,6 +105,7 @@
                                 </Border>
                             </ControlTemplate>
                         </Button.Template>
+
                     </Button>
 
                     <Button x:Name="btnClose"                          
@@ -93,6 +117,7 @@
                             Cursor="Hand"
                             Grid.Column="2"
                             Click="btnClose_Click">
+
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Background" Value="#DA34AE"/>
@@ -103,6 +128,7 @@
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
+
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border Width="18" Height="18"
@@ -114,21 +140,24 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-
                 </Grid>
+
                 <StackPanel Width="220"
                             Grid.Row="1"
                             Orientation="Vertical"
                             Margin="0,35,0,0">
+
                     <Image Source="/Images/Logo.png"
                            Width="100" Height="100"/>
-                    <TextBlock Text="Physic App"
+
+                    <TextBlock Text="Physics App"
                                Foreground="White"
                                FontSize="25"
                                FontWeight="Medium"
                                FontFamily="Montserrat"
                                HorizontalAlignment="Center"/>
-                    <TextBlock Text="Learning Physics"
+
+                    <TextBlock Text="Изучение физики"
                                Foreground="LightGray"
                                FontSize="12"
                                FontWeight="Medium"
@@ -136,13 +165,17 @@
                                TextWrapping="Wrap"
                                TextAlignment="Center"
                                Margin="0,5,0,0"/>
-                    <TextBlock Text="Username"
+
+
+                    <TextBlock Text="Логин"
                                Foreground="DarkGray"
                                FontSize="12"
                                FontWeight="Medium"
                                FontFamily="Montserrat"                             
                                Margin="0,35,0,0"/>
+
                     <TextBox x:Name="txtUser"
+                             Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
                              FontSize="13"
                              FontWeight="Medium"
                              FontFamily="Montserrat"                            
@@ -154,45 +187,44 @@
                              VerticalContentAlignment="Center"
                              Margin="0,5,0,0"
                              Padding="20,0,0,0">
+
                         <TextBox.Background>
                             <ImageBrush ImageSource="/Images/user-icon.png"
                                         Stretch="None"
                                         AlignmentX="Left"/>
                         </TextBox.Background>
                     </TextBox>
-                    <TextBlock Text="Password"
+
+                    <TextBlock Text="Пароль"
                                Foreground="DarkGray"
                                FontSize="12"
                                FontWeight="Medium"
                                FontFamily="Montserrat"                             
                                Margin="0,15,0,0"/>
-                    <PasswordBox x:Name="txtPass"
-                             FontSize="13"
-                             FontWeight="Medium"
-                             FontFamily="Montserrat"                            
-                             Foreground="White"
-                             CaretBrush="LightGray"
-                             BorderBrush="DarkGray"
-                             BorderThickness="0,0,0,2"
-                             Height="28"
-                             VerticalContentAlignment="Center"
-                             Margin="0,5,0,0"
-                             Padding="20,0,0,0">
-                        <PasswordBox.Background>
-                            <ImageBrush ImageSource="/Images/key-icon.png"
-                                        Stretch="None"
-                                        AlignmentX="Left"/>
-                        </PasswordBox.Background>
-                    </PasswordBox>
-                    <Button x:Name="btnLogin"                          
+
+                    <customcontrols:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="28"                            
+                                                        Margin="0,5,0,0">
+                    </customcontrols:BindablePasswordBox>
+
+                    <TextBlock Text="{Binding ErrorMessage}"
+                               Foreground="#D7596D"
+                               FontSize="12"
+                               FontWeight="Medium"
+                               FontFamily="Montserrat"                             
+                               Margin="0,10,0,0"
+                               TextWrapping="Wrap"/>
+
+                    <Button x:Name="btnLogin" 
+                            Command="{Binding LoginCommand}"
                             BorderThickness="0"
-                            Content="LOG IN"
+                            Content="ВОЙТИ"
                             Foreground="White"
                             FontSize="12"
                             FontFamily="Montserrat"
                             Cursor="Hand"                           
-                            Margin="0,50,0,0"
-                            Click="btnLogin_Click">
+                            Margin="0,30,0,0">
+
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Background" Value="#462AD8"/>
@@ -203,6 +235,7 @@
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
+
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border Width="150" Height="40"
@@ -214,24 +247,32 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
+
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center"
                                 Margin="0,15,0,0">
-                        <TextBlock Text="Forgot Password?"
+
+                        <TextBlock Text="Забыли пароль"
                                Foreground="DarkGray"
                                FontSize="12"
                                FontWeight="Medium"
                                FontFamily="Montserrat"/>
-                        <TextBlock Text="Reset"
+
+                        <TextBlock Text="Восстоновить"
                                Foreground="White"
                                FontSize="12"
                                FontWeight="Medium"
                                FontFamily="Montserrat"
                                Cursor="Hand"
                                Margin="8,0,0,0"/>
+
                     </StackPanel>
+
                 </StackPanel>
+
             </Grid>
+
         </Border>
+
     </Border>
 </Window>

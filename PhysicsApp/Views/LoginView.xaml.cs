@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace PhysicsApp
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для LoginView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginView : Window
     {
-        public MainWindow()
+        public LoginView()
         {
             InitializeComponent();
         }
@@ -39,11 +39,6 @@ namespace PhysicsApp
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
-        }
-
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
